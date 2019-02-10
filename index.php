@@ -1,6 +1,6 @@
 <?php
-require('view/frontend/listPostsView.php');
-?>
+require('controller/frontend.php');
+
 
 
 
