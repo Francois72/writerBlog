@@ -1,4 +1,104 @@
 body
-{
+{	
+	height: 100%;
+	width: 100%;        
+	margin: 0;
+	padding: 0;
+	background-size: 100%;
 	background: LightCyan;
 }
+
+header
+{  
+	display: flex;
+	background-color: black;
+	width: 100%;
+	height: 75px;
+}
+
+.para1
+{  
+ 	background-color: black;
+ 	color:white;
+ 	width: 50%;
+ 	padding-top: 3px;
+ 	padding-left: 40px;
+}
+
+.para2
+{
+	background-color: black;
+	width: 50%;
+	display: flex;
+	justify-content: right;
+	align-items: center;  
+}
+
+.para2 nav ul
+{
+	list-style-type: none;
+	display: flex;    
+}
+
+.para2 nav li
+{
+	margin-right: 15px;
+	background: black;  
+}
+
+.para2 nav a
+{
+	font-size: 1.1em;
+	color: white;   
+	text-decoration: none;
+}
+
+header nav a:hover
+{
+	color: yellow;
+}
+
+.authorLastPost
+{	
+	background: white;
+	margin-bottom: 10px;
+
+}
+
+
+.authorLastPost a
+{
+    text-decoration: none;
+    color: blue;
+}
+
+
+@media all and (max-width: 350px)
+{
+	header
+	{
+		display: flex;
+		flex-direction: column;
+	}
+	.para1:nth-child(1)
+	{
+		order: 2;
+	}
+	.para2:nth-child(2)
+	{
+		order: 1;
+	}
+	.para1
+	{
+		width: 100%;
+		background: green; 
+	}
+	.para2
+	{
+		background-color: black;
+		width: 100%;
+		justify-content: left;
+		align-items: center;
+	}
+}
+
