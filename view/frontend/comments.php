@@ -1,41 +1,54 @@
-<?php 
+<?php $title = 'Mon blog'; ?>
 
-try
-{
-	$db = new PDO('mysql:host=localhost;dbname=writerblog;charset=utf8','root','');
+<?php ob_start(); ?>
 
-}
 
-catch(Exception $e)
-{
-	die('Erreur:'.$e->getMessage());
-}
-
-/**/
-
-$post=$db->prepare('SELECT id, title, content, creation_date FROM postswriter WHERE id=?');
-
-$post->execute(array($_GET['post']));
+<?php
+include ("model/Manager.php");
+include ("model/postManager.php");
+$db = dbConnect();
+$post = getPost($db);
 $data = $post->fetch();
 
-
-	echo '<h2><strong>'.$data['title']. '</strong></h2>';
-	echo $data['content'];
-
-
-
-
-
-/**/
-
+?>
+<div class= authorLastPost>
+<?php
+echo '<h2><strong>'.$data['title']. '</strong></h2>';
+echo $data['content'];
 $post->closeCursor();
 
+?>
+</div>
 
-$post=$db->prepare('SELECT author, comment, creation_date FROM comments where post_id = ? ORDER BY creation_date DESC');
+<?php
 
-$post->execute(array($_GET['post']));
+
+
+if (isset($_SESSION['user']))
+{	
+	echo '<form action="index.php?action=postcomment" method="post">';
+	echo '<input name="user_id" type="hidden" value="'.$_SESSION['user'].'"/></p>';
+	echo '<input name="post" type="hidden" value="  '.$_GET['post'].'  ">';
+	echo '<textarea class="tinymce" name="comment"></textarea>';
+	echo '<input type="submit" id="send_button" value="Envoyer" />';
+	echo '</form>';
+}
+
+include ("model/commentManager.php");
+$post = getComments($db);
+
+
+echo '<h1>Commentaires</h1>';
 
 while ($data = $post->fetch())
-{
-	echo '<p><strong>'.$data['author'].'</strong> ('.$data['creation_date'].') <strong>'.$data['comment'].'</strong></p>';
+{	
+	//echo $data['comment'].'</br>';
+
+	echo '<p><strong>'.$data['user'].'</strong> ('.$data['creation_date2'].') <strong>'.$data['comment'].'</strong></p>';
 }
+
+$post->closeCursor();
+?>
+
+<?php $content = ob_get_clean(); ?>
+<?php require('template.php'); ?>
