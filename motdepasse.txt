@@ -1,0 +1,5 @@
+pseudo: Francois
+mdp: 123
+
+pseudo: Mathieu
+mdp: 123456
