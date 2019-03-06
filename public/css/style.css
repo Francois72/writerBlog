@@ -16,6 +16,12 @@ header
 	height: 75px;
 }
 
+img
+{
+	width: 100%;
+	display: flex;
+}
+
 .para1
 {  
  	background-color: black;
@@ -70,6 +76,11 @@ header nav a:hover
 {
     text-decoration: none;
     color: blue;
+}
+
+textarea
+{
+	width: 50%;
 }
 
 
