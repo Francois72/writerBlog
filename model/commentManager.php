@@ -26,8 +26,8 @@ function getComments($db)
 
 function postComment($db)
 {
-	$data = $db->prepare('INSERT INTO comments (post_id, author, comment) VALUES(?,?,?)');
-	$data->execute(array($_POST['post'], $_POST['author'], $_POST['comment']));
+	$data = $db->prepare('INSERT INTO comments (post_id, user_id, comment) VALUES(?,?,?)');
+	$data->execute(array($_POST['post'], $_POST['user_id'], $_POST['comment']));
 	return $data;
 }
 
