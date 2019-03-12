@@ -24,8 +24,11 @@ function inscriptionpost()
 			session_start();
 	        $_SESSION['id'] = $resultat['id'];
 	        $_SESSION['user'] = $user;
-				
-			header('Location: index.php');
+	        $_SESSION['rights'] = $resultat['rights'];
+			
+			echo $_SESSION['user'];
+			echo $_SESSION['rights'];
+			//header('Location: index.php');
 
 	    }
 	    else
@@ -54,6 +57,10 @@ function connexionpost()
 	// Comparaison du pass envoyé via le formulaire avec la base
 	$isPasswordCorrect = password_verify($_POST['pass'], $resultat['pass']);
 
+
+	
+	
+	
 	if (!$resultat)
 	{
 	    echo 'Mauvais identifiant ou mot de passe !';
@@ -63,18 +70,35 @@ function connexionpost()
 			
 	    if ($isPasswordCorrect) {
 	        session_start();
+	        //if ($resultat['rights'] == '0')
+	        //{
 	        $_SESSION['id'] = $resultat['id'];		        
 	        $_SESSION['user'] = $user;
-	        echo 'Vous êtes connecté '.$_SESSION['user'].' !';	        
+	        $_SESSION['rights'] = $resultat['rights'];
+
+	        //echo 'Vous êtes connecté '.$_SESSION['user'].' !';	        
 	        //echo 'Admin = 1, non admin = 0 : resultat ='.$resultat['rights'];		        
 		    header('Location: index.php');
+		    //}
+		    //else
+		    //{
+		    //	header('Location: index.php?action=admin_connexion');
+
+		    //}
 		}
 		else {
 		    echo 'Mauvais identifiant ou mot de passe !!';
 		}
 		    
 	}
+	
 	//fin ancien connexion_post.php
+}
+
+
+function admin_connexionpost()
+{
+	header('Location: view/frontend/adminListPostsView.php');
 }
 
 
