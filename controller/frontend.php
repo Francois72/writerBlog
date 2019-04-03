@@ -1,99 +1,172 @@
 <?php
+include ("model/Manager.php");
+
+function loginPage()
+{
+	require('view/frontend/connexion.php');
+}
+
+function connexionpost()
+{	
+	$req = userConnect($_POST['user']);
+	$resultat = $req->fetch();
+	// Comparaison du pass envoyé via le formulaire avec la base
+	$isPasswordCorrect = password_verify($_POST['pass'], $resultat['pass']);	
+	if (!$resultat)
+	{
+	    echo 'Mauvvvvvvvvais identifiant ou mot de passe !';
+	}
+	else
+	{
+	    if ($isPasswordCorrect) 
+	    {	
+	    	session_start(); 		        
+	        $_SESSION['id'] = $resultat['id'];
+	        $_SESSION['user'] = $_POST['user'];
+	        $_SESSION['rights'] = $resultat['rights'];
+		    header('Location: index.php');
+		}
+		else
+		{
+		    echo 'Mauvais identifiant ou moooooooot de passe !!';
+		}
+	}	
+}
+
+function deconnexion()
+{
+	// Suppression des variables de session et de la session
+	$_SESSION = array();
+	session_destroy();
+	// Suppression des cookies de connexion automatique
+	setcookie('login', '');
+	setcookie('pass_hache', '');	
+	header('Location:index.php');
+}
+
+function registrationPage()
+{
+	require('view/frontend/inscription.php');
+}
+
 
 function inscriptionpost()
 {
-	include ("model/Manager.php");
 
-	$db = dbConnect();
-
-	$pass_hache = password_hash($_POST['pass'], PASSWORD_DEFAULT);
-	$user = $_POST['user'];
-	$email = $_POST['email'];
-
-	if (isset($_POST['email']))
+	if ($_POST['pass'] == $_POST['pass2'])
 	{
-	    $_POST['email'] = htmlspecialchars($_POST['email']); // On rend inoffensives les balises HTML que le visiteur a pu rentrer
-	    if (preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $_POST['email']))
-	    {
-	        echo 'L\'adresse ' . $_POST['email'] . ' est <strong>valide</strong> !';
+		$_POST['email'] = htmlspecialchars($_POST['email']); // On rend inoffensives les balises HTML que le visiteur a pu rentrer
+		if (preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $_POST['email']))
+		{
 
+		    echo 'L\'adresse ' . $_POST['email'] . ' est <strong>valide</strong> !';
 			// Insertion
-			$req = $db->prepare('INSERT INTO users(user,pass,email) VALUES(:user, :pass, :email)');
-			$req->execute(array('user' => $user, 'pass' => $pass_hache, 'email' => $email));
+			
+			$user = $_POST['user'];
+			$pass_hache = password_hash($_POST['pass'], PASSWORD_DEFAULT);			
+			$email = $_POST['email'];
+
+			insertUser($user,$pass_hache,$email);
+
+			
+			$req = userConnect($user);
+			$resultat = $req->fetch();
 
 			session_start();
-	        $_SESSION['id'] = $resultat['id'];
-	        $_SESSION['user'] = $user;
-	        $_SESSION['rights'] = $resultat['rights'];
-			
-			echo $_SESSION['user'];
-			echo $_SESSION['rights'];
-			//header('Location: index.php');
-
+			$_SESSION['id'] = $resultat['id'];		        
+			$_SESSION['user'] = $user;
+			$_SESSION['rights'] = $resultat['rights'];
+			header('Location: index.php');			
 	    }
 	    else
 	    {
 	        echo 'L\'adresse ' . $_POST['email'] . ' n\'est pas valide, recommencez !';
 	    }
-	}
+    }
+    else
+    {
+    	echo 'Les deux mots de passe ne correspondent pas.';
+    }
 }
 
-
-function connexionpost()
+function postUserComment()
 {
-//début ancien connexion_post.php
-	include ("model/Manager.php");
-	$db = dbConnect();
-
-	$user = $_POST['user'];	
-	
-	//  Récupération de l'utilisateur et de son pass hashé
-	$req = $db->prepare('SELECT id, pass, rights FROM users WHERE user = :user');
-
-	$req->execute(array(
-	    'user' => $user));
-	$resultat = $req->fetch();
-
-	// Comparaison du pass envoyé via le formulaire avec la base
-	$isPasswordCorrect = password_verify($_POST['pass'], $resultat['pass']);
-
-
-	
-	
-	
-	if (!$resultat)
-	{
-	    echo 'Mauvais identifiant ou mot de passe !';
-	}
-	else
-	{
-			
-	    if ($isPasswordCorrect) {
-	        session_start();
-	        //if ($resultat['rights'] == '0')
-	        //{
-	        $_SESSION['id'] = $resultat['id'];		        
-	        $_SESSION['user'] = $user;
-	        $_SESSION['rights'] = $resultat['rights'];
-
-	        //echo 'Vous êtes connecté '.$_SESSION['user'].' !';	        
-	        //echo 'Admin = 1, non admin = 0 : resultat ='.$resultat['rights'];		        
-		    header('Location: index.php');
-		    //}
-		    //else
-		    //{
-		    //	header('Location: index.php?action=admin_connexion');
-
-		    //}
-		}
-		else {
-		    echo 'Mauvais identifiant ou mot de passe !!';
-		}
-		    
-	}
-	
-	//fin ancien connexion_post.php
+	$data = postComment();
+	header('location:index.php?action=viewPost&post='.$_POST['post']);
+	//header('location:index.php?post='.$_POST['post']);
 }
+
+
+function getPostIndex()
+{
+	$post = getPosts();
+	require('view/frontend/listPostsView.php');
+}
+
+
+function commentsf()
+{
+	$post = getPost(); 
+	require('view/frontend/comments.php');
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//A dépalcer ou supprimer
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function admin_connexionpost()
@@ -102,29 +175,48 @@ function admin_connexionpost()
 }
 
 
-function deconnexion()
+
+
+
+
+
+
+
+function editPostf()
 {
-	// Suppression des variables de session et de la session
-	$_SESSION = array();
-	session_destroy();
+	//include ("model/Manager.php");
+	//$db = dbConnect();
 
-	// Suppression des cookies de connexion automatique
-	setcookie('login', '');
-	setcookie('pass_hache', '');
-	
-	header('Location:index.php');
-}
-
-
-function postcommentf()
-{
-	include ("model/Manager.php");
-	$db = dbConnect();
-
-	include ("model/commentManager.php");
-	$data = postComment($db);
+	//include ("model/postManager.php");
+	$data = editPost($db);
 	header('location:index.php?post='.$_POST['post']);
 }
 
+
+
+//utilisation de require plutôt que de header????
+
+
+function adminEditPostf()
+{
+	require('view/frontend/adminEditPost.php');
+}
+
+
+/*
+function nomprovisoire()
+{	
+	nomprovisoiref();
+	
+
+}
+
+
+function insert()
+{
+	
+	insertM($db);
+}
+*/
 
 
