@@ -1,110 +1,78 @@
 <?php
 session_start();
-
-/*
-if (isset($_COOKIE['user']))
-{  	
-    echo $_COOKIE['user'];
-}
-else
-{
-	echo 'bonjour !! (sans cookie) ';
-}
-*/
-
-
-if (isset($_SESSION['rights']))
-{  	
-	//if (($_SESSION['rights']) == '0') {} else {}
-    echo 'bonjour !!! (avec session) ';
-    echo $_SESSION['rights'];
-}
-else
-{
-	echo 'bonjour !!! (sans session) ';
-}
-
-
 require('controller/frontend.php');
 
 try {
-
-
+	//début du getaction
 	if (isset($_GET['action']))
-	{	
-		if ($_GET['action'] == 'connexion')	
+	{
+		if ($_GET['action'] == 'connexion')
 		{
-			require('view/frontend/connexion.php'); 		
+			loginPage();
 		}
-
 
 		if ($_GET['action'] == 'connexionpost')
 		{
-			if ((isset($_POST['user'])) AND (isset($_POST['pass'])))		
-			{
+
+			if ((isset($_POST['user'])) AND (isset($_POST['pass'])))
+			{				
 				connexionpost();
 			}
 			else
 			{
-				throw new Exception('Aucun identifiant ou mot de passe');
+				throw new Exception('Aucunnnn identifiant ou mot de passe');
 			}
-
-
-
-
-
-		}		
+		}
 
 		if ($_GET['action'] == 'deconnexion')
 		{
 			deconnexion();
 		}
 
-		if ($_GET['action'] == 'inscription')//
+		if ($_GET['action'] == 'inscription')
 		{
-			require('view/frontend/inscription.php');
+			registrationPage();
 		}
 
-		if ($_GET['action'] == 'inscriptionpost')
-		{	
 
+		if ($_GET['action'] == 'inscriptionpost')
+		{
 			if ((isset($_POST['user'])) AND (isset($_POST['pass'])) AND (isset($_POST['pass2'])) AND (isset($_POST['email'])))
 			{
 				inscriptionpost();
 			}
 			else
 			{
-				throw new Exception('Aucun identifiant ou mot de passe');
+				throw new Exception('Aucun identifiant ou mot de passe'); 
 			}
-		}	
-
-		if ($_GET['action'] == 'postcomment')//
-		{
-			postcommentf();
 		}
 
-		/*
-		if ($_GET['action'] == 'admin_connexion')//
+		if ($_GET['action'] == 'viewPost') 
 		{
-			admin_connexionpost();
-		}
-		*/
+			if (isset($_GET['post']))
+			{
+					commentsf();
+			}
+			else
+			{
+				echo 'Erreur ';
+			}
+		}			
+		
 
+		if ($_GET['action'] == 'postcomment')
+		{
+			postUserComment();
+		}
+	// fin du if (isset($_GET['action']))	
 	}
-
-	else
+	else		
 	{
-		if (isset($_GET['post'])) 	
-		{
-			require('view/frontend/comments.php');
-		}
-		else
-		{
-			require('view/frontend/listPostsView.php');
-		}
+		getPostIndex();
 	}
+}
 
-	}
+
 
 catch(Exception $e) { // S'il y a eu une erreur, alors...
     echo 'Erreur : ' . $e->getMessage();
@@ -112,17 +80,3 @@ catch(Exception $e) { // S'il y a eu une erreur, alors...
 
 
 
-/*
-if (isset($_GET['action']))
-{
-	switch ($_GET['action'])
-	{
-		case 'connexion':
-			require('view/frontend/connexion.php'); 
-		break;
-		case 'connexionpost':
-			connexionpost();
-		break;
-	}	
-}
-*/
