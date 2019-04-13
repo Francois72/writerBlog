@@ -64,6 +64,45 @@ try {
 		{
 			postUserComment();
 		}
+
+		if ($_GET['action'] == 'admin')
+		{
+			allersuradmin();
+		}
+
+		if (($_GET['action'] == 'editpostview') AND isset(($_GET['post'])))
+		{			
+			allersuradminpost();
+		}
+
+		if (($_GET['action'] == 'editpost') AND isset(($_GET['post'])))
+		{
+			actionpourediterlepost();
+			//echo 'bonjourno';
+			
+		}
+
+
+		if (($_GET['action'] == 'report') AND isset(($_GET['post'])))
+		{
+			
+			// ....
+			
+		}
+
+
+
+
+
+		/*
+		if ($_GET['action'] == 'report')
+		{
+			
+		}
+		*/
+
+
+
 	// fin du if (isset($_GET['action']))	
 	}
 	else		
