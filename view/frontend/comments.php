@@ -62,7 +62,7 @@ while ($data = $comments->fetch())
 {	
 	//echo $data['comment'].'</br>';
 
-	echo '<p><strong>'.$data['user'].'</strong> ('.$data['creation_date2'].') <strong>'.$data['comment'].'</strong><button>Signaler</button></p>';	
+	echo '<p><strong>'.$data['user'].'</strong> ('.$data['creation_date2'].') <strong>'.$data['comment'].'</strong><button><a href=index.php?action=report&post='.$data['id'].'>Signaler</a></button></p>';	
 }
 
 $post->closeCursor();
