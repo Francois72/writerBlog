@@ -1,5 +1,7 @@
 <?php
-include ("model/Manager.php");
+include ("model/commentManager.php");
+include ("model/postManager.php");
+include ("model/userManager.php");
 
 function loginPage()
 {
@@ -7,8 +9,11 @@ function loginPage()
 }
 
 function connexionpost()
-{	
-	$req = userConnect($_POST['user']);
+{
+	$userManager = new UserManager();//création de l'objet
+	$req = $userManager->userConnect($_POST['user']);
+
+	
 	$resultat = $req->fetch();
 	// Comparaison du pass envoyé via le formulaire avec la base
 	$isPasswordCorrect = password_verify($_POST['pass'], $resultat['pass']);	
@@ -66,10 +71,12 @@ function inscriptionpost()
 			$pass_hache = password_hash($_POST['pass'], PASSWORD_DEFAULT);			
 			$email = $_POST['email'];
 
-			insertUser($user,$pass_hache,$email);
 
+			$UserManager = new UserManager();
+			$UserManager->insertUser($user,$pass_hache,$email);
 			
-			$req = userConnect($user);
+			$userManager = new UserManager();//création de l'objet
+			$req = $userManager->userConnect($user);			
 			$resultat = $req->fetch();
 
 			session_start();
@@ -80,143 +87,156 @@ function inscriptionpost()
 	    }
 	    else
 	    {
-	        echo 'L\'adresse ' . $_POST['email'] . ' n\'est pas valide, recommencez !';
+	    	throw new Exception('L\'adresse ' . $_POST['email'] . ' n\'est pas valide, recommencez !');	       
 	    }
     }
     else
     {
-    	echo 'Les deux mots de passe ne correspondent pas.';
+    	throw new Exception('Les deux mots de passe ne correspondent pas');
     }
 }
 
 function postUserComment()
 {
-	$data = postComment();
-	header('location:index.php?action=viewPost&post='.$_POST['post']);
-	//header('location:index.php?post='.$_POST['post']);
+	$commentsManager = new CommentsManager();
+	$data = $commentsManager-> postComment();	
+	header('location:index.php?action=viewPost&post='.$_POST['post']);	
 }
-
 
 function getPostIndex()
 {
-	$post = getPosts();
+	$PostManager = new PostManager();
+	$post = $PostManager-> getPosts();	
 	require('view/frontend/listPostsView.php');
 }
 
-
 function commentsf()
 {
-	$post = getPost(); 
+	$PostManager = new PostManager();
+	$post = $PostManager-> getPost();
+	$CommentsManager = new CommentsManager();
+	$comments = $CommentsManager -> getComments();
 	require('view/frontend/comments.php');
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-///////////////
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//A dépalcer ou supprimer
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function admin_connexionpost()
+function allersuradmin()
 {
-	header('Location: view/frontend/adminListPostsView.php');
+	$PostManager = new PostManager();
+	$post = $PostManager-> getPosts2();
+	require('view/frontend/adminListPostsView.php');
 }
 
 
-
-
-
-
-
-
-
-function editPostf()
+function allersuradminpost()
 {
-	//include ("model/Manager.php");
-	//$db = dbConnect();
+	$PostManager = new PostManager();
+	$post = $PostManager-> getPost();
 
-	//include ("model/postManager.php");
-	$data = editPost($db);
-	header('location:index.php?post='.$_POST['post']);
-}
+	//$data = $post->fetch();
+	//echo 'content: '.$data['content'];
 
-
-
-//utilisation de require plutôt que de header????
-
-
-function adminEditPostf()
-{
 	require('view/frontend/adminEditPost.php');
-}
-
-
-/*
-function nomprovisoire()
-{	
-	nomprovisoiref();
-	
 
 }
 
 
-function insert()
+
+function addpostview()
 {
-	
-	insertM($db);
+	require('view/frontend/adminAddPost.php');
 }
+
+
+
+function actionpourajouterunpost()
+{
+	$postManager = new PostManager();
+	$post = $postManager-> addPost();
+	/*allersuradminpost();*/
+	header('location:index.php?action=admin');
+
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function actionpourediterlepost()
+{	
+	$title = $_POST['title'];
+	$content = $_POST['content'];	
+	
+	$PostManager = new PostManager();
+	$post = $PostManager-> editPost($title,$content);
+	/*allersuradminpost();*/
+	header('location:index.php?action=admin');	
+
+}
+
+
+
+function actionpoursignalerlepost()
+{
+
+	$CommentManager = new CommentsManager();
+	$post = $CommentManager-> reportComment();
+}
+
+
+function actionpourvoirlessignalements()
+{
+	//echo 'ca va?';
+	$CommentManager = new CommentsManager();
+	$post = $CommentManager-> getReportlistComment();
+
+	/*
+	while ($donnees = $post->fetch())
+	{
+		echo $donnees['comment'] .'<br />';
+	}
+	*/
+	//header('Location: view/frontend/adminreportListView.php');
+	require('view/frontend/adminreportListView.php');
+
+	//http://localhost/tests/writerBlog/index?action=listesignalement
+
+	/*
+	?>
+	<?php $title = 'Mon blog'; ?>
+
+
+	<?php ob_start(); ?>
+
+	<?php
+	while ($donnees = $post->fetch())
+	{
+		echo $donnees['comment'] .'<br />';
+	}
+	?>
+
+	<?php $content = ob_get_clean(); ?>
+	<?php require('view/frontend/template.php'); ?>
+
+
+<?php
 */
 
 
+}
