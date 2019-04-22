@@ -1,16 +1,7 @@
 <?php
 require_once("Manager.php");
 class CommentsManager extends Manager
-{
-	/*
-	public function getComments()
-	{
-		$db = $this -> dbConnect();		
-		$post=$db->prepare('SELECT comments.comment, users.user, DATE_FORMAT(comments.creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date2 FROM users INNER JOIN comments ON comments.user_id = users.id where comments.post_id = ?  ORDER BY comments.creation_date DESC');
-		$post->execute(array($_GET['post']));
-		return $post;
-	}
-	*/
+{	
 
 	public function getComments()
 	{
@@ -20,10 +11,6 @@ class CommentsManager extends Manager
 		return $post;
 	}
 
-
-
-
-
 	public function postComment()
 	{
 		$db = $this -> dbConnect();		
@@ -31,4 +18,21 @@ class CommentsManager extends Manager
 		$data->execute(array($_POST['post'], $_POST['user_id'], $_POST['comment']));
 		return $data;
 	}
+
+	public function reportComment()
+	{
+		$db = $this -> dbConnect();		
+		$post=$db->prepare('UPDATE comments SET report = 1 WHERE id=?');
+		$post->execute(array( $_GET['post']));
+		//return $post;
+	}
+
+	public function getReportlistComment()
+	{
+		$db = $this -> dbConnect();		
+		$post=$db->query('SELECT comments.comment, comments.user_id, users.user FROM comments INNER JOIN users ON comments.user_id = users.id where report=\'1\'');		
+		return $post;
+		/*jointure*/
+	}
+
 }
