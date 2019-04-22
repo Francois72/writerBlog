@@ -54,7 +54,7 @@ $CommentsManager = new CommentsManager();
 $post = $CommentsManager -> getComments();
 */
 //$post = getComments();
-
+ 
 
 
 
@@ -62,11 +62,16 @@ while ($data = $comments->fetch())
 {	
 	//echo $data['comment'].'</br>';
 
-	echo '<p><strong>'.$data['user'].'</strong> ('.$data['creation_date2'].') <strong>'.$data['comment'].'</strong><button><a href=index.php?action=report&post='.$data['id'].'>Signaler</a></button></p>';	
+	echo '<p><strong>'.$data['user'].'</strong> ('.$data['creation_date2'].') <strong>'.$data['comment'].'</strong>';
+
+	if (isset($_SESSION['user']))
+	{
+		echo '<button><a href=index.php?action=report&post='.$data['id'].'>Signaler</a></button></p>';
+	}	
 }
 
 $post->closeCursor();
 ?>
 
 <?php $content = ob_get_clean(); ?>
-<?php require('template.php'); ?>
+<?php require('template.php'); ?> 
