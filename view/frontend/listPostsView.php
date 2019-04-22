@@ -1,9 +1,6 @@
 <?php $title = 'Mon blog'; ?>
 
 <?php ob_start(); ?>
-
-
-
 	<!--<img src="public/images/imgalaska.jpg">-->	
 	<h1>Billet simple pour l'Alaska</h1>
 	<p>Derniers billets du blog :</p>
@@ -21,10 +18,9 @@
 			</strong>
 		</h2>
 		<p>
-			<?= nl2br(htmlspecialchars($data['content']))?>
+			<?= nl2br($data['content'])?>
 		</p>
-		<em><a href="index.php?action=viewPost&post=<?=$data['id']?>">Commentaires</a></em>	 
-		<!--<em><a href="index.php?post=<?=$data['id']?>">Commentaires</a></em>	-->
+		<em><a href="index.php?action=viewPost&post=<?=$data['id']?>">Commentaires</a></em>		
 		</div>
 	
 	
