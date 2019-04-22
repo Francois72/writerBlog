@@ -55,7 +55,7 @@ try {
 			}
 			else
 			{
-				echo 'Erreur ';
+				throw new Exception('Erreur'); 
 			}
 		}			
 		
@@ -70,36 +70,61 @@ try {
 			allersuradmin();
 		}
 
+
+		if ($_GET['action'] == 'addpostview') 
+		{
+			addpostview();
+		}
+
+		
+		if ($_GET['action'] == 'addpost') 
+		{
+			actionpourajouterunpost();
+		}
+
+
+
 		if (($_GET['action'] == 'editpostview') AND isset(($_GET['post'])))
 		{			
 			allersuradminpost();
 		}
 
+
 		if (($_GET['action'] == 'editpost') AND isset(($_GET['post'])))
 		{
 			actionpourediterlepost();
-			//echo 'bonjourno';
+			//echo '450';
 			
 		}
 
 
 		if (($_GET['action'] == 'report') AND isset(($_GET['post'])))
-		{
-			
-			// ....
-			
+		{			
+			actionpoursignalerlepost();			
 		}
 
 
-
+		if ($_GET['action'] == 'listesignalement') 
+		{			
+			actionpourvoirlessignalements();
+		}
 
 
 		/*
-		if ($_GET['action'] == 'report')
-		{
-			
-		}
+		
+
+
+		if ($_GET['action'] == 'supprimerpost') 
+
+		if ($_GET['action'] == 'supprimercomment') 
+		if ($_GET['action'] == 'ignorercomment') 
+
+		
+
 		*/
+
+
+
 
 
 
