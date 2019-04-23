@@ -24,7 +24,6 @@ class PostManager extends Manager
 		return $post;
 	}
 
-
 	public function editPost($title,$content)
 	{
 		$db = $this -> dbConnect();
@@ -39,24 +38,20 @@ class PostManager extends Manager
 		return $post;
 	}
 
-	/*
 	public function	addPost()
-	{
-		$db = $this -> dbConnect();		
-		$post=$db->prepare('INSERT INTO postswriter (title, content) VALUES(?,?)');
-		
-		return $post;
-
-	}
-	*/
-
-		public function	addPost()
 	{
 		
 		$db = $this -> dbConnect();				
 		$post= $db->prepare('INSERT INTO postswriter(title, content) VALUES(?,?)');
 		$post->execute(array($_POST['title'],$_POST['content']));
+	}
 
+	public function	deletePost()
+	{
+		
+		$db = $this -> dbConnect();				
+		$post= $db->prepare('DELETE FROM postswriter WHERE id=?');
+		$post->execute(array($_GET['post']));
 	}
 
 
