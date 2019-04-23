@@ -151,12 +151,18 @@ function addpostview()
 function actionpourajouterunpost()
 {
 	$postManager = new PostManager();
-	$post = $postManager-> addPost();
-	/*allersuradminpost();*/
-	header('location:index.php?action=admin');
-
-	
+	$post = $postManager-> addPost();	
+	header('location:index.php?action=admin');	
 }
+
+
+function actionpoursupprimerunpost()
+{
+	$postManager = new PostManager();
+	$post = $postManager-> deletePost();	
+	header('location:index.php?action=admin');	
+}
+
 
 
 
