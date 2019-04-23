@@ -17,7 +17,7 @@
 		<strong><?= htmlspecialchars($data['title'])?></strong>
 		
 		<em><a href="index.php?action=editpostview&post=<?php echo $data['id']?>">Editer</a></em>
-		<em><a href="#">Supprimer</a></em>		
+		<em><a href="index.php?action=deletepost&post=<?php echo $data['id']?>">Supprimer</a></em>		
 		</br>		
 
 	<?php
