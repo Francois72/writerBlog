@@ -84,6 +84,18 @@ try {
 
 
 
+
+
+		if (($_GET['action'] == 'deletepost') AND isset(($_GET['post'])))
+		{			
+			actionpoursupprimerunpost();			
+		}
+
+
+
+
+
+
 		if (($_GET['action'] == 'editpostview') AND isset(($_GET['post'])))
 		{			
 			allersuradminpost();
