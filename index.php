@@ -110,10 +110,34 @@ try {
 		}
 
 
-		if (($_GET['action'] == 'report') AND isset(($_GET['post'])))
-		{			
-			actionpoursignalerlepost();			
+		if (($_GET['action'] == 'report') AND isset($_GET['postid']) AND isset($_GET['commentid']))
+		{	
+
+			actionpoursignalerlepost($_GET['postid'],$_GET['commentid']);			
 		}
+
+		/// en travaux
+		if (($_GET['action'] == 'ignore') AND isset(($_GET['post'])))
+		{	
+			ignorerunsignalement();			
+		}
+		////////
+
+
+		
+
+
+
+		if (($_GET['action'] == 'supprimercommentaire') AND isset(($_GET['post'])))
+		{			
+			actionpoursupprimeruncommentairesignale();			
+		}
+
+
+
+
+		
+
 
 
 		if ($_GET['action'] == 'listesignalement') 
