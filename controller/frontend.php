@@ -163,46 +163,41 @@ function actionpoursupprimerunpost()
 	header('location:index.php?action=admin');	
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function actionpourediterlepost()
 {	
 	$title = $_POST['title'];
 	$content = $_POST['content'];	
 	
 	$PostManager = new PostManager();
-	$post = $PostManager-> editPost($title,$content);
-	/*allersuradminpost();*/
+	$post = $PostManager-> editPost($title,$content);	
 	header('location:index.php?action=admin');	
 
 }
 
 
-
-function actionpoursignalerlepost()
+function actionpoursignalerlepost($idpost,$commentid)
 {
-
 	$CommentManager = new CommentsManager();
-	$post = $CommentManager-> reportComment();
+	$post = $CommentManager-> reportComment($commentid);
+	//require('index.php?action=viewPost&post='.$_SESSION['post']);
+	header('location:index.php?action=viewPost&post='.$idpost);
+}
+
+/// en travaux  ///
+function ignorerunsignalement()
+{
+	$CommentManager = new CommentsManager();
+	$post = $CommentManager-> ignoreComment();
+	header('location:index.php?action=listesignalement');
+}
+///////
+
+
+function actionpoursupprimeruncommentairesignale()
+{
+	$CommentManager = new CommentsManager();
+	$post = $CommentManager-> deleteComment();
+	header('location:index.php?action=listesignalement');
 }
 
 
