@@ -19,10 +19,28 @@ class CommentsManager extends Manager
 		return $data;
 	}
 
-	public function reportComment()
+	public function reportComment($commentid)
 	{
 		$db = $this -> dbConnect();		
 		$post=$db->prepare('UPDATE comments SET report = 1 WHERE id=?');
+		$post->execute(array($commentid));
+		//return $post;
+	}
+
+
+	public function deleteComment()
+	{
+		$db = $this -> dbConnect();		
+		$post=$db->prepare('DELETE FROM comments WHERE id=?');
+		$post->execute(array( $_GET['post']));
+		//return $post;
+	}
+
+
+	public function ignoreComment()
+	{
+		$db = $this -> dbConnect();		
+		$post=$db->prepare('UPDATE comments SET report = 0 WHERE id=?');
 		$post->execute(array( $_GET['post']));
 		//return $post;
 	}
@@ -30,7 +48,7 @@ class CommentsManager extends Manager
 	public function getReportlistComment()
 	{
 		$db = $this -> dbConnect();		
-		$post=$db->query('SELECT comments.comment, comments.user_id, users.user FROM comments INNER JOIN users ON comments.user_id = users.id where report=\'1\'');		
+		$post=$db->query('SELECT comments.comment, comments.id, comments.user_id, users.user FROM comments INNER JOIN users ON comments.user_id = users.id where report=\'1\'');		
 		return $post;
 		/*jointure*/
 	}
