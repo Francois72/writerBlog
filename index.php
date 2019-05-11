@@ -1,14 +1,24 @@
 <?php
 session_start();
-require('controller/frontend.php');
+include ("controller/frontend.php");
+include ("controller/backend.php");
 
 try {
 	//début du getaction
 	if (isset($_GET['action']))
 	{
+
 		if ($_GET['action'] == 'connexion')
 		{
-			loginPage();
+
+			$frontend = new Frontend();
+			$req = $frontend->loginPage();			
+
+			/*
+			$frontend = new Frontend();
+			$req = $frontend->
+			*/
+
 		}
 
 		if ($_GET['action'] == 'connexionpost')
@@ -16,7 +26,8 @@ try {
 
 			if ((isset($_POST['user'])) AND (isset($_POST['pass'])))
 			{				
-				connexionpost();
+				$frontend = new Frontend();
+				$req = $frontend->connexion();				
 			}
 			else
 			{
@@ -26,157 +37,126 @@ try {
 
 		if ($_GET['action'] == 'deconnexion')
 		{
-			deconnexion();
+			$frontend = new Frontend();
+			$req = $frontend->deconnexion();
 		}
 
 		if ($_GET['action'] == 'inscription')
 		{
-			registrationPage();
+				$frontend = new Frontend();
+				$req = $frontend->registrationPage();
 		}
-
 
 		if ($_GET['action'] == 'inscriptionpost')
 		{
 			if ((isset($_POST['user'])) AND (isset($_POST['pass'])) AND (isset($_POST['pass2'])) AND (isset($_POST['email'])))
 			{
-				inscriptionpost();
+				$frontend = new Frontend();
+				$req = $frontend->inscriptionpost();				
 			}
 			else
 			{
-				throw new Exception('Aucun identifiant ou mot de passe'); 
+				throw new Exception('Aucun identifiant ou mot de passe');
 			}
 		}
 
-		if ($_GET['action'] == 'viewPost') 
+		if ($_GET['action'] == 'viewPost')
 		{
 			if (isset($_GET['post']))
 			{
-					commentsf();
+				$frontend = new Frontend();
+				$req = $frontend->getPostCommentsPage();				
 			}
 			else
 			{
-				throw new Exception('Erreur'); 
+				throw new Exception('Erreursss');
 			}
-		}			
-		
+		}
 
 		if ($_GET['action'] == 'postcomment')
-		{
-			postUserComment();
+		{	
+			$frontend = new Frontend();
+			$req = $frontend->postUserComment();
 		}
+
+		if (($_GET['action'] == 'report') AND isset($_GET['postid']) AND isset($_GET['commentid']))
+		{					
+			$frontend = new Frontend();
+			$req = $frontend->reportPostAction($_GET['postid'],$_GET['commentid']);
+			
+		}
+
+
+
 
 		if ($_GET['action'] == 'admin')
 		{
-			allersuradmin();
+			$backend = new Backend();
+			$req = $backend->getAdminPage();			
 		}
 
-
-		if ($_GET['action'] == 'addpostview') 
+		if ($_GET['action'] == 'addpostview')
 		{
-			addpostview();
+			$backend = new Backend();
+			$req = $backend->addpostview();			
 		}
-
 		
 		if ($_GET['action'] == 'addpost') 
 		{
-			actionpourajouterunpost();
+			$backend = new Backend();
+			$req = $backend->addPostAction();			
 		}
-
-
-
-
 
 		if (($_GET['action'] == 'deletepost') AND isset(($_GET['post'])))
-		{			
-			actionpoursupprimerunpost();			
+		{				
+			$backend = new Backend();
+			$req = $backend->deletePostAction();
 		}
-
-
-
-
-
+		
 
 		if (($_GET['action'] == 'editpostview') AND isset(($_GET['post'])))
 		{			
-			allersuradminpost();
+			$backend = new Backend();
+			$req = $backend->getEditPostPage();			
 		}
 
 
 		if (($_GET['action'] == 'editpost') AND isset(($_GET['post'])))
 		{
-			actionpourediterlepost();
-			//echo '450';
-			
+			$backend = new Backend();
+			$req = $backend->updatePostAction();			
 		}
 
 
-		if (($_GET['action'] == 'report') AND isset($_GET['postid']) AND isset($_GET['commentid']))
-		{	
 
-			actionpoursignalerlepost($_GET['postid'],$_GET['commentid']);			
-		}
-
-		/// en travaux
 		if (($_GET['action'] == 'ignore') AND isset(($_GET['post'])))
 		{	
-			ignorerunsignalement();			
+			$backend = new Backend();
+			$req = $backend->ignoreReportAction();			
 		}
-		////////
-
-
-		
-
-
 
 		if (($_GET['action'] == 'supprimercommentaire') AND isset(($_GET['post'])))
 		{			
-			actionpoursupprimeruncommentairesignale();			
+			$backend = new Backend();
+			$req = $backend->deleteReportedComment();
 		}
 
-
-
-
-		
-
-
-
-		if ($_GET['action'] == 'listesignalement') 
+		if ($_GET['action'] == 'listesignalement')
 		{			
-			actionpourvoirlessignalements();
+			$backend = new Backend();
+			$req = $backend->getAdminreportListView();			
 		}
 
-
-		/*
-		
-
-
-		if ($_GET['action'] == 'supprimerpost') 
-
-		if ($_GET['action'] == 'supprimercomment') 
-		if ($_GET['action'] == 'ignorercomment') 
-
-		
-
-		*/
-
-
-
-
-
-
-	// fin du if (isset($_GET['action']))	
 	}
+
 	else		
 	{
-		getPostIndex();
+		$frontend = new Frontend();
+		$req = $frontend->getPostIndex();		
 	}
 }
 
-
-
-catch(Exception $e) { // S'il y a eu une erreur, alors...
+catch(Exception $e) 
+{ 
     echo 'Erreur : ' . $e->getMessage();
 }
-
-
-
