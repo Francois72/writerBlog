@@ -5,7 +5,7 @@ body
 	margin: 0;
 	padding: 0;
 	background-size: 100%;
-	background: LightCyan;
+	background: lightcyan;	
 }
 
 header
@@ -13,7 +13,7 @@ header
 	display: flex;
 	background-color: black;
 	width: 100%;
-	height: 75px;
+	height: 85px;
 }
 
 img
@@ -42,8 +42,9 @@ img
 
 .para2 nav ul
 {
-	list-style-type: none;
-	display: flex;    
+	list-style-type: none;	
+	display: flex;
+	overflow-wrap: wrap;   
 }
 
 .para2 nav li
@@ -64,46 +65,303 @@ header nav a:hover
 	color: yellow;
 }
 
-.authorLastPost
-{	
-	background: white;
-	margin-bottom: 10px;
 
+.title-grey
+{
+	color:grey;
+	font-size: 22px;
+}
+
+.userc
+{
+	color: grey;
+	text-transform: uppercase;
+}
+
+.datec
+{
+	color:grey;
+	margin: 5px;
+	font-size: 14px;	
+}
+
+.authorPost, .textend
+{	
+	padding: 20px; 	
+	background-color: snow;
+	text-align: justify;
+	font-size: 18px;	 
+	max-width: 600px;
+	max-height: 242px;
+	color: black;
+	overflow: hidden;
 }
 
 
-.authorLastPost a
+.authorPostCmt
+{
+	padding: 20px;
+	margin: 40px;	
+	background-color: snow;
+	text-align: justify;
+	font-size: 18px;	 
+	max-width: 600px;	
+	color: black;	
+}
+
+.textend
+{	
+	padding-top: 0px;
+}
+
+.authorPost a
 {
     text-decoration: none;
     color: blue;
 }
 
-textarea
+.blocPost
 {
-	width: 50%;
+	margin: 40px 40px 40px 15%;
+}
+
+.retour
+{
+	margin: 40px;
+}
+
+h1,h3
+{
+	margin: 40px 40px 40px 15%; 
+}
+
+form
+{
+	margin: 40px 40px 40px 15%;
+	min-width: 380px;	
+}
+
+form
+{
+	max-width: 641px;
+}
+
+.blocComments
+{
+	border: 1px solid grey;
+	border-radius: 2px;
+	background: white;
+	padding: 0px 5px 0px 10px;
+	max-width: 626px;
+	margin-left: 40px;
+	margin-bottom: 0px;	
+}
+
+.reportbutton
+{
+	float: right;
+    background:white;    
+    border-radius:5px;
+    width:90px;
+    border:1px solid #ccc;
+    box-shadow:1px 1px 3px #999;
+}
+
+button a
+{
+	color: black;
+	text-decoration: none;
+}
+
+#adminpage
+{	
+	margin-left: 40px;
+}
+
+i 
+{
+	margin: 5px 10px 5px 5px;
+}
+
+#adminpage a
+{
+	text-decoration: none;
+	color:black;	
 }
 
 
-@media all and (max-width: 350px)
+.editdel
 {
+	width: 400px;	
+	margin: 10px 0 0 0;
+}
+
+
+#adminpage a:hover 
+{
+	color: blue;
+}
+
+.editdel a
+{
+	position: relative;
+	right: 0px;	
+	min-width: 100%;	
+	padding: 0px 10px 0px 0px;	
+	color:black;
+}
+
+.h3-admin
+{
+	margin: 0 0 20px 0;
+}
+
+.returnpg, .listrpt 
+{
+	margin: 40px;
+}
+
+.listchaps 
+{
+	margin: 50px 0;
+}
+
+.retrnpglst 
+{
+	margin-top: 20px;
+}
+
+.blocPost, h1, h3, form, .authorPostCmt, .retour {
+	margin: 40px;
+	margin-left: 20%
+}
+
+.blocComments
+{
+	margin: 10px 0px 0 0px;
+	margin-left: 20%
+}
+
+#send_button
+{
+    padding:5px 0 5px 0;
+    margin-top: 5px;        
+    background:white;
+    color:#555;
+    border-radius:5px;
+    width:120px;
+    border:1px solid #ccc;
+    box-shadow:1px 1px 3px #999;    
+}
+
+#send_button:hover
+{
+    background:grey;
+    border:1px solid grey;
+    color: white;
+}
+
+
+#titleEdit
+{
+	width: 46.5%;
+	padding: 15px;	
+	font-size: 0.9em;
+}
+
+.listsgn
+{	
+	background-color: #9eb4d8;
+	margin: 30px 0;
+	padding: 10px;
+	width: 70%;
+	
+	
+}
+
+.listsgn-int
+{
+	display: block;
+	float: right;
+	
+}
+
+
+
+.listsgn-int a
+{
+	display: inline-block;
+	text-decoration: none;
+	margin: 7 10px 0 0;	
+	padding: 5px;
+	color: black;
+	border: solid 1px black;
+	background-color: #9eb4d8;
+}
+
+.listsgn-int a:hover
+{
+	color: blue;
+	border: solid 1px blue;
+}
+
+@media all and (max-width: 850px)
+{	
+	.blocPost, h1, h3, form, .blocComments, .authorPostCmt, .retour 
+	{
+		margin: 40px;
+		margin-left: 40px;
+	}
+
+	.listsgn
+	{	
+		background-color: #9eb4d8;		
+		margin: 30px 0;
+		padding: 10px;
+		width: 95%;			
+	}
+}
+
+
+
+@media all and (max-width: 450px)
+{
+	body 
+	{
+		background: lightcyan;
+		margin: auto 0;
+	}	
+
 	header
 	{
+		height: 120px;
 		display: flex;
 		flex-direction: column;
 	}
+
+	.blocPost
+	{
+		margin: 10px 0;
+		background: white;
+	}
+
 	.para1:nth-child(1)
 	{
 		order: 2;
 	}
+
 	.para2:nth-child(2)
 	{
 		order: 1;
 	}
+
 	.para1
 	{
-		width: 100%;
-		background: green; 
+		width: auto;
+		height: 100px;		
+		background: grey; 
 	}
+
 	.para2
 	{
 		background-color: black;
@@ -111,11 +369,43 @@ textarea
 		justify-content: left;
 		align-items: center;
 	}
-}
 
-#titleEdit
-{
-	width: 46.5%;
-	padding: 15px;	
-	font-size: 0.9em;
+	form
+	{
+		margin: 0px;		
+	}
+
+	.blocComments
+	{
+		margin: 10px 0px;
+	}
+
+	.authorPostCmt
+	{	
+		margin: auto 0;
+	}
+
+	h1, h3, form, .blocComments, .authorPostCmt, .retour 
+	{
+		margin: 10px 0 0 0;
+		width: 90.5%;		
+	}
+
+	.blocComments 
+	{	
+		min-height: 80px;
+	}
+
+	.title-page-admin, .returnpg 
+	{
+		margin: 40px;
+	}
+
+	.titlesM
+	{
+		font-size: 16px;
+		margin: 0 5%;
+		line-height: 150%;
+	}
+
 }
