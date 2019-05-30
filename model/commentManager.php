@@ -6,7 +6,7 @@ class CommentsManager extends Manager
 	public function getComments()
 	{
 		$db = $this -> dbConnect();		
-		$post=$db->prepare('SELECT comments.comment, users.user, comments.id, DATE_FORMAT(comments.creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date2 FROM users INNER JOIN comments ON comments.user_id = users.id where comments.post_id = ?  ORDER BY comments.creation_date DESC');
+		$post=$db->prepare('SELECT comments.comment, users.user, comments.id, DATE_FORMAT(comments.creation_date, \'%d/%m/%Y à %Hh%imin\') AS creation_date2 FROM users INNER JOIN comments ON comments.user_id = users.id where comments.post_id = ?  ORDER BY comments.creation_date DESC');
 		$post->execute(array($_GET['post']));
 		return $post;
 	}
@@ -20,11 +20,10 @@ class CommentsManager extends Manager
 	}
 
 	public function reportComment($commentid)
-	{
+	{			
 		$db = $this -> dbConnect();		
 		$post=$db->prepare('UPDATE comments SET report = 1 WHERE id=?');
-		$post->execute(array($commentid));
-		//return $post;
+		$post->execute(array($commentid));		
 	}
 
 
@@ -32,8 +31,7 @@ class CommentsManager extends Manager
 	{
 		$db = $this -> dbConnect();		
 		$post=$db->prepare('DELETE FROM comments WHERE id=?');
-		$post->execute(array( $_GET['post']));
-		//return $post;
+		$post->execute(array( $_GET['post']));	
 	}
 
 
@@ -41,16 +39,14 @@ class CommentsManager extends Manager
 	{
 		$db = $this -> dbConnect();		
 		$post=$db->prepare('UPDATE comments SET report = 0 WHERE id=?');
-		$post->execute(array( $_GET['post']));
-		//return $post;
+		$post->execute(array( $_GET['post']));		
 	}
 
 	public function getReportlistComment()
 	{
 		$db = $this -> dbConnect();		
 		$post=$db->query('SELECT comments.comment, comments.id, comments.user_id, users.user FROM comments INNER JOIN users ON comments.user_id = users.id where report=\'1\'');		
-		return $post;
-		/*jointure*/
+		return $post;		
 	}
 
 }
