@@ -4,25 +4,19 @@
         <meta charset="utf-8" />
         <title>Connexion</title>
         <link href="public/css/style2.css" rel="stylesheet" />        
-    </head>
-    
-  
+    </head>  
 
     <body>
-    <a href="index.php">retour</a>
 
-    <h1>Connexion</h1>
-      
+        <a href="index.php">retour</a>
 
+        <h1>Connexion</h1>
 
-    <!--<form action="view/frontend/connexion_post.php" method="post">-->
-    <form action="index.php?action=connexionpost" method="post">
-        <p><label>Pseudo: </label></br><input type ="text" name="user" value="" size="40" required/></p>
-        <p><label>Mot de passe: </label></br><input type ="password" name="pass" value="" size="40" required/></p>                
-        <p><label></label><input type="submit" id="send_button" value="Se connecter" /></p>    
-    </form>
-
-
+        <form action="index.php?action=connexionpost" method="post">
+            <p><label>Pseudo: </label></br><input type ="text" name="user" value="" size="40" required/></p>
+            <p><label>Mot de passe: </label></br><input type ="password" name="pass" value="" size="40" required/></p>                
+            <p><label></label><input type="submit" id="send_button" value="Se connecter" /></p>    
+        </form>
    
     </body>
 </html>
