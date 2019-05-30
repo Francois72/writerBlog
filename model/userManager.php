@@ -18,4 +18,14 @@ class UserManager extends Manager
 									'pass' => $pass_hache, 
 									'email' => $email));	
 	}
+
+
+	public function searchUser()
+	{		
+		$db = $this -> dbConnect();
+		$req = $db->prepare('SELECT user FROM users where user=?');
+		$req->execute(array($_POST['user']));
+		return $req;		
+	}
+
 }
