@@ -1,33 +1,56 @@
-    body
-    {
-        background: black;
-        color: white;
-    }
-    form, h1
-    {
-        text-align: center; 
-    }
-    p
-    {
-        font-size: 18px;
-    }
-    label, #bouton_envoyer
-    {
-        
-        font:bold 16px Arial;   
-    }
-    input
-    {
-        font-size: 16px;       
-        padding: 5px 0px 5px 5px;
-    }
-    #send_button
-    {
-        padding:5px 0 5px 0;        
-        background:white;
-        color:#555;
-        border-radius:5px;
-        width:120px;
-        border:1px solid #ccc;
-        box-shadow:1px 1px 3px #999;    
-    }
+body
+{
+    background: black;
+    color: white;
+}
+
+form, h1
+{
+    text-align: center; 
+}
+
+p
+{
+    font-size: 18px;
+}
+
+label, #bouton_envoyer
+{
+    font:bold 16px Arial;   
+}
+
+input
+{
+    font-size: 16px;       
+    padding: 5px 0px 5px 5px;
+}
+
+#send_button
+{
+    padding:5px 0 5px 0;        
+    background:white;
+    color:#555;
+    border-radius:5px;
+    width:120px;
+    border:1px solid #ccc;
+    box-shadow:1px 1px 3px #999;    
+}
+
+#send_button:hover
+{
+    background:grey;
+    border:1px solid grey;
+    color: white;
+}
+
+a
+{
+    color:white;
+    text-decoration: none;
+}
+
+a:hover
+{
+    color: lightcyan;
+}
+
