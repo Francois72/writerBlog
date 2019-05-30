@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8" />
-        <title><?= $title ?></title>
+        <meta charset="utf-8" />       
+        <title>Billet simple pour l'Alaska</title>
+        <meta description="Billet simple pour l'Alaska: blog de Jean Forteroche.">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
         <link href="./public/css/style.css" rel="stylesheet" /> 
     </head>
 
@@ -29,7 +31,7 @@
 
                     if ((isset($_SESSION['rights'])) AND ($_SESSION['rights'] == '1'))
                     {
-                        echo '<li><a href="index.php?action=admin">Admin (non actif)</a></li>';
+                        echo '<li><a href="index.php?action=admin">Admin</a></li>';
                     }
 
                 	echo '<li><a href="index.php">Accueil</a></li>';
@@ -48,9 +50,8 @@
         </div>
     </header>
         
-    <body>        
-        <?= $content ?>        
-
+    <body>           
+        <?= $content ?>
         <script type="text/javascript" src="public/js/jquery.js"></script>
         <script type="text/javascript" src="public/plugin/tinymce/tinymce.min.js"></script>
         <script type="text/javascript" src="public/plugin/tinymce/init-tinymce.js"></script>
