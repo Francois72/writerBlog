@@ -26,42 +26,32 @@ class PostManager extends Manager
 
 	public function editPost($title,$content)
 	{
-		$db = $this -> dbConnect();
-		//$post=$db->prepare('UPDATE postswriter SET title = :nwtitle, content = :nwcontent WHERE id= :id');
-		//$post->execute(array(
-		//	'nwtitle' => $title,
-		//	'nwcontent' => $content,
-		//	'id' => $_GET['post']
-		//	));		
+		$db = $this -> dbConnect();	
 		$post=$db->prepare('UPDATE postswriter SET title = ?, content = ? WHERE id=?');
 		$post->execute(array($title, $content, $_GET['post']));
 		return $post;
 	}
 
 	public function	addPost()
-	{
-		
+	{		
 		$db = $this -> dbConnect();				
 		$post= $db->prepare('INSERT INTO postswriter(title, content) VALUES(?,?)');
 		$post->execute(array($_POST['title'],$_POST['content']));
 	}
 
 	public function	deletePost()
-	{
-		
+	{		
 		$db = $this -> dbConnect();				
 		$post= $db->prepare('DELETE FROM postswriter WHERE id=?');
 		$post->execute(array($_GET['post']));
 	}
 
-
-
-
+	//commentaire effacer en même temps que le billet
+	public function	deleteCommentsPost()
+	{		
+		$db = $this -> dbConnect();				
+		$post= $db->prepare('DELETE FROM comments WHERE post_id=?');
+		$post->execute(array($_GET['post']));
+	}
 
 }
-
-
-//penser à suppriemr les commentaires du post supprimer
-
-
-
