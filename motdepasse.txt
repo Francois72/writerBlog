@@ -1,5 +1,7 @@
 pseudo: Francois
-mdp: 123
+mdp: XXXXXX
 
 pseudo: Mathieu
-mdp: 123456
+mdp: XXXXXX
+
+
