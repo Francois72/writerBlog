@@ -1,6 +1,12 @@
 tinymce.init({
 	selector:"textarea.tinymce",
-	width: "50%",
+	plugins: "autoresize",
+    autoresize_overflow_padding: 5,
+    autoresize_bottom_margin: 20,
+        
+    width: "100%",     
+    
+
 	//menubar:false,
 	//statusbar: false,
 	forced_root_block : false,
